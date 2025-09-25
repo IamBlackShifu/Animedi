@@ -34,13 +34,13 @@ jobs:
               composer install --no-dev --optimize-autoloader
             fi
 
-            # Optional: database migrations (if using Laravel etc.)
+            # Optional: database migrations (if using Laravel)
             if [ -f artisan ]; then
               echo "Running Laravel migrations..."
               php artisan migrate --force
             fi
 
-            # Reload Nginx to apply changes
-            sudo systemctl reload nginx
+            # Reload Nginx without password prompt
+            sudo /bin/systemctl reload nginx
 
             echo "Deployment complete!"

@@ -9,26 +9,44 @@ A comprehensive web-based system for managing veterinary practices, built with P
 - Appointment booking and scheduling
 - Queue management system
 - Patient search and management
+- View and update appointment status
+- Clean, modern dashboard UI
 
 ### Doctor Module
 - View daily appointments
 - Record medical diagnoses, treatments, and prescriptions
-- Upload medical files and attachments
+- Clinical examination entry (TPR, physical exam, notes)
+- Lab work and diagnostic imaging fields
+- Upload and attach medical files/images
 - Mark appointments as complete
+- View patient medical history
+- Modern, professional dashboard UI
 
 ### Billing & Records Module
 - Track consultation and treatment costs
 - Generate and print invoices
 - Search medical records by patient or date
 - Payment status tracking
+- Export billing and record data
 
 ### Admin Module
 - Staff management (add/edit doctors, receptionists, admins)
-- System reports and analytics
+- System reports and analytics (Chart.js)
 - Revenue tracking
 - Appointment statistics
+- Role-based access control
+- User account management
 
-## Installation
+### General Features
+- Responsive, accessible design (Bootstrap 5)
+- Unified, professional color scheme (Infinity Lines of Code)
+- Secure login and session management
+- Password hashing and input validation
+- File upload and attachment management
+- Broken link cleanup and navigation improvements
+- Attribution to Infinity Lines of Code for design and UI
+
+## Installation On Local Machine for Development
 
 ### Prerequisites
 - XAMPP (or similar Apache/MySQL/PHP stack)

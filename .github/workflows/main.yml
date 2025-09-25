@@ -41,6 +41,6 @@ jobs:
             fi
 
             # Reload Nginx to apply changes
-            sudo systemctl reload nginx
+            systemctl reload nginx
 
             echo "Deployment complete!"

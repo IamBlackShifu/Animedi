@@ -1,8 +1,8 @@
 <?php
 // Database connection for VetCare Pro
 $servername = "localhost";
-$username = "myapp_user"; // Change as needed
-$password = "testing123"; // Change as needed
+$username = "myapp_user"; 
+$password = "testing123"; 
 $dbname = "myapp_db";
 
 // Create connection

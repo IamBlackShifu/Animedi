@@ -71,7 +71,7 @@ The system uses MySQL with the following tables:
 ## Technologies Used
 
 - **Frontend**: HTML5, CSS3, Bootstrap 5, FontAwesome icons
-- **Backend**: PHP 7+
+- **Backend**: PHP 8+
 - **Database**: MySQL
 - **Charts**: Chart.js (for admin reports)
 

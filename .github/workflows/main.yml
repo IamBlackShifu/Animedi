@@ -1,0 +1,46 @@
+name: Deploy PHP App to Droplet
+
+on:
+  push:
+    branches:
+      - main   # change if your default branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. SSH & deploy
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: 164.92.94.138
+          username: deploy
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e  # exit if any command fails
+            echo "Pulling latest code..."
+            cd /var/www/vetcarepro
+            git reset --hard
+            git pull origin main
+
+            # If you have composer dependencies
+            if [ -f composer.json ]; then
+              echo "Running composer install..."
+              composer install --no-dev --optimize-autoloader
+            fi
+
+            # Optional: database migrations (if using Laravel etc.)
+            if [ -f artisan ]; then
+              echo "Running Laravel migrations..."
+              php artisan migrate --force
+            fi
+
+            # Reload Nginx to apply changes
+            sudo systemctl reload nginx
+
+            echo "Deployment complete!"

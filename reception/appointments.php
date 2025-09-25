@@ -36,20 +36,20 @@ include("../includes/dbconn.php");
             <div class="col-md-2 sidebar p-3">
                 <h4 class="text-center mb-4">VetCare Pro</h4>
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                     <li class="nav-item">
                         <a class="nav-link" href="dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="patients.php"><i class="fas fa-paw me-2"></i>Patients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="appointments.php"><i class="fas fa-calendar-check me-2"></i>Appointments</a>
+                        <a class="nav-link active" href="appointments.php"><i class="fas fa-calendar me-2"></i>Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="clientdata.php"><i class="fas fa-users me-2"></i>Client Data</a>
+                        <a class="nav-link" href="queue.php"><i class="fas fa-list me-2"></i>Queue</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="history.php"><i class="fas fa-history me-2"></i>History</a>
+                        <a class="nav-link" href="billing.php"><i class="fas fa-dollar-sign me-2"></i>Billing</a>
                     </li>
                     <li class="nav-item mt-4">
                         <a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
@@ -111,7 +111,7 @@ include("../includes/dbconn.php");
                                             <td>{$row['patient_name']}<br><small class='text-muted'>{$row['species']}</small></td>
                                             <td>{$row['owner_name']}</td>
                                             <td>Dr. {$row['doctor_name']}</td>
-                                            <td>{$row['reason']}</td>
+                                            <td>" . (isset($row['reason']) ? $row['reason'] : 'N/A') . "</td>
                                             <td><span class='{$status_class}'>{$row['status']}</span></td>
                                             <td>
                                                 <div class='btn-group' role='group'>

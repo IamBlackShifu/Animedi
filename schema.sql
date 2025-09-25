@@ -58,6 +58,8 @@ CREATE TABLE records (
     treatment TEXT,
     prescription TEXT,
     outcome TEXT,
+    lab_work TEXT,
+    diagnostic_imaging TEXT,
     files VARCHAR(255), -- Path to uploaded files
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (appointment_id) REFERENCES appointments(id)

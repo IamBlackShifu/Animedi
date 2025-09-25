@@ -33,7 +33,7 @@ include("../includes/dbconn.php");
             <div class="col-md-2 sidebar p-3">
                 <h4 class="text-center mb-4">VetCare Pro</h4>
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                     <li class="nav-item">
                         <a class="nav-link" href="dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                     </li>
                     <li class="nav-item">
@@ -44,6 +44,9 @@ include("../includes/dbconn.php");
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="queue.php"><i class="fas fa-list me-2"></i>Queue</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="billing.php"><i class="fas fa-dollar-sign me-2"></i>Billing</a>
                     </li>
                     <li class="nav-item mt-4">
                         <a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>

@@ -30,10 +30,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $diagnosis = $_POST['diagnosis'];
     $treatment = $_POST['treatment'];
     $prescription = $_POST['prescription'];
+    $tpr = $_POST['tpr'];
+    $clinical_notes = $_POST['clinical_notes'];
+    $lab_work = $_POST['lab_work'];
+    $diagnostic_imaging = $_POST['diagnostic_imaging'];
+    $outcome = $_POST['outcome'];
+    $file_path = null;
+    if (isset($_FILES['imaging_file']) && $_FILES['imaging_file']['error'] === UPLOAD_ERR_OK) {
+        $upload_dir = '../uploads/';
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+        $filename = uniqid('img_') . '_' . basename($_FILES['imaging_file']['name']);
+        $target = $upload_dir . $filename;
+        if (move_uploaded_file($_FILES['imaging_file']['tmp_name'], $target)) {
+            $file_path = $target;
+        }
+    }
 
-    // Insert record
-    $stmt = $conn->prepare("INSERT INTO records (appointment_id, diagnosis, treatment, prescription) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("isss", $appointment_id, $diagnosis, $treatment, $prescription);
+    $stmt = $conn->prepare("INSERT INTO records (appointment_id, tpr, physical_exam, diagnosis, treatment, prescription, outcome, lab_work, diagnostic_imaging, files) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssssssss", $appointment_id, $tpr, $clinical_notes, $diagnosis, $treatment, $prescription, $outcome, $lab_work, $diagnostic_imaging, $file_path);
     $stmt->execute();
     $stmt->close();
 
@@ -131,7 +145,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h5>Medical Record</h5>
                     </div>
                     <div class="card-body">
-                        <form method="POST">
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label class="form-label">Clinical Examination (TPR)</label>
+                                <input type="text" class="form-control mb-2" name="tpr" placeholder="Temp / Pulse / Respiration">
+                                <textarea class="form-control" name="clinical_notes" rows="2" placeholder="Clinical notes"></textarea>
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label">Diagnosis</label>
                                 <textarea class="form-control" name="diagnosis" rows="3" required></textarea>
@@ -143,6 +162,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="mb-3">
                                 <label class="form-label">Prescription</label>
                                 <textarea class="form-control" name="prescription" rows="3"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Outcome / Follow-up</label>
+                                <textarea class="form-control" name="outcome" rows="2"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tests</label>
+                                <textarea class="form-control mb-2" name="lab_work" rows="2" placeholder="Lab work"></textarea>
+                                <textarea class="form-control mb-2" name="diagnostic_imaging" rows="2" placeholder="Diagnostic imaging notes (e.g. X-ray)"></textarea>
+                                <label class="form-label mt-2">Attach Diagnostic Imaging (X-ray, etc)</label>
+                                <input type="file" class="form-control" name="imaging_file" accept="image/*,application/pdf">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Consultation Fee</label>

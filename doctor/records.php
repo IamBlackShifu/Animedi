@@ -16,7 +16,7 @@ $records_result = $conn->query("
     JOIN patients p ON a.patient_id = p.id
     JOIN owners o ON p.owner_id = o.id
     WHERE a.doctor_id = $doctor_id
-    ORDER BY r.date_created DESC
+    ORDER BY r.created_at DESC
 ");
 ?>
 
@@ -93,7 +93,7 @@ $records_result = $conn->query("
                                                 - <?php echo date('M d, Y', strtotime($record['date'])); ?>
                                             </h6>
                                             <small class="text-muted">
-                                                Recorded: <?php echo date('M d, Y H:i', strtotime($record['date_created'])); ?>
+                                                Recorded: <?php echo date('M d, Y H:i', strtotime($record['created_at'])); ?>
                                             </small>
                                         </div>
                                     </div>

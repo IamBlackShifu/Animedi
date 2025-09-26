@@ -1,22 +1,20 @@
-/* Infinity Lines of Code - Professional Solid Theme for VetCare Pro */
+/* Infinity Lines of Code - Professional Solid Theme for VetCare Pro (Black/White/Blue only) */
 :root {
-  --primary: #185a9d;          /* Dark blue */
-  --accent: #f7b731;           /* Gold/Accent */
-  --success: #28a745;          /* Green */
-  --danger: #e74c3c;           /* Red */
-  --sidebar-bg: #232946;       /* Dark sidebar */
-  --sidebar-link: #b8c1ec;     /* Sidebar links */
-  --sidebar-link-active: #ffffff;
-  --sidebar-link-hover: #43a1f0;
+  --primary: #185a9d;          /* Blue */
+  --sidebar-bg: #000000;       /* Solid black sidebar */
+  --sidebar-link: #ffffff;     /* White sidebar links */
+  --sidebar-link-active: #185a9d; /* Blue when active */
+  --sidebar-link-hover: #185a9d;  /* Blue hover background */
   --card-bg: #ffffff;           /* Solid white cards */
-  --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  --border-radius: 12px;
+  --card-shadow: none;          /* No shadows for solid look */
+  --border-radius: 8px;
   --font-main: 'Montserrat', Arial, sans-serif;
 }
 
 body {
   font-family: var(--font-main);
-  background: #f4f6f9;  /* Light gray background */
+  background: #ffffff;  /* White page background */
+  color: #000000;       /* Black text */
   min-height: 100vh;
 }
 
@@ -35,26 +33,25 @@ body {
 
 .sidebar .nav-link.active,
 .sidebar .nav-link:focus {
-  background: var(--primary);
-  color: var(--sidebar-link-active) !important;
+  background: var(--sidebar-link-active);
+  color: #ffffff !important;
 }
 
 .sidebar .nav-link:hover {
   background: var(--sidebar-link-hover);
-  color: var(--sidebar-link-active) !important;
+  color: #ffffff !important;
 }
 
 .card {
   background: var(--card-bg);
   border-radius: var(--border-radius);
-  box-shadow: var(--card-shadow);
-  border: none;
+  box-shadow: none;
+  border: 1px solid #000000; /* thin black border for separation */
   margin-bottom: 24px;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: transform 0.2s;
 }
 
 .card:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   transform: translateY(-2px);
 }
 
@@ -64,28 +61,20 @@ body {
   font-weight: 600;
   border-radius: 6px;
   transition: background 0.2s;
-  color: #fff;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
   background: #0f3a6b; /* Darker blue */
 }
 
-.btn-success {
-  background: var(--success);
-  border: none;
-  color: #fff;
-}
-
-.btn-success:hover {
-  background: #218838;
-}
-
+/* Headings */
 h2, h3, h4, h5 {
-  color: var(--primary);
+  color: var(--primary); /* Blue headings */
   font-weight: 700;
 }
 
+/* Animations */
 .dashboard-anim {
   animation: fadeInDash 1s cubic-bezier(.23,1.01,.32,1);
 }
@@ -95,11 +84,11 @@ h2, h3, h4, h5 {
   to { opacity: 1; transform: none; }
 }
 
-/* Attribution */
+/* Attribution text */
 .attribution {
   text-align: center;
   margin-top: 32px;
-  color: #888;
+  color: #000000;
   font-size: 0.95rem;
   letter-spacing: 0.5px;
 }

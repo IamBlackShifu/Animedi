@@ -1,0 +1,14 @@
+# Ignore sensitive and environment-specific files
+core/dbconn.php
+reception/dbconn.php
+*.log
+*.tmp
+.env
+.DS_Store
+Thumbs.db
+/node_modules/
+/vendor/
+.idea/
+*.bak
+assets/img/uploads/
+includes/dbconn.php

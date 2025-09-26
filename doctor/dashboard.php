@@ -18,33 +18,69 @@ $saturday = date('Y-m-d', strtotime('saturday this week'));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VetCare Pro - Doctor Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/theme-infinityloc.css">
+    <style>
+        body { background-color: #ecf0f1; font-family: 'Montserrat', sans-serif; }
+        .sidebar { position: fixed; left: 0; top: 0; width: 250px; height: 100vh; background: #2c3e50; color: white; transition: width 0.3s; z-index: 1000; overflow-y: auto; }
+        .sidebar.collapsed { width: 70px; }
+        .sidebar .nav-link { color: #bdc3c7; transition: all 0.3s; padding: 10px 15px; }
+        .sidebar .nav-link:hover { color: white; background: #34495e; }
+        .sidebar .nav-link.active { color: white; background: #3498db; }
+        .sidebar .nav-link span { display: inline; }
+        .sidebar.collapsed .nav-link span { display: none; }
+        .sidebar .logout-btn { position: absolute; bottom: 20px; left: 15px; right: 15px; }
+        .sidebar.collapsed .logout-btn { left: 10px; right: 10px; }
+        .main-content { margin-left: 250px; transition: margin-left 0.3s; padding: 20px; }
+        .main-content.collapsed { margin-left: 70px; }
+        .navbar { background: #34495e; color: white; margin-left: 250px; transition: margin-left 0.3s; }
+        .navbar.collapsed { margin-left: 70px; }
+        .card { border: none; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); background: #ffffff; }
+        .table { border-radius: 10px; overflow: hidden; background: #ffffff; }
+        .table thead th { background: #34495e; color: white; border: none; }
+        .table tbody tr:hover { background: #f8f9fa; }
+        .btn { border-radius: 25px; }
+        .btn-primary { background: #3498db; border-color: #3498db; }
+        .btn-primary:hover { background: #2980b9; }
+        .btn-success { background: #27ae60; border-color: #27ae60; }
+        .btn-success:hover { background: #229954; }
+        .attribution { text-align: center; color: #7f8c8d; }
+    </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-2 sidebar p-3">
-            <h4 class="text-center mb-4">VetCare Pro</h4>
-            <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link active" href="dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="patients.php"><i class="fas fa-paw me-2"></i>My Patients</a></li>
-                <li class="nav-item"><a class="nav-link" href="records.php"><i class="fas fa-file-medical me-2"></i>Medical Records</a></li>
-                <li class="nav-item"><a class="nav-link" href="history.php"><i class="fas fa-history me-2"></i>Patient History</a></li>
-                <li class="nav-item"><a class="nav-link" href="doctorsnotes.php"><i class="fas fa-sticky-note me-2"></i>Doctor Notes</a></li>
-                <li class="nav-item"><a class="nav-link" href="clientdata.php"><i class="fas fa-users me-2"></i>Client Data</a></li>
-                <li class="nav-item mt-4"><a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-            </ul>
+<!-- Fixed Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="p-3">
+        <h5 class="text-center mb-4">VetCare Pro</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link active" href="dashboard.php"><i class="fas fa-tachometer-alt me-2"></i><span>Dashboard</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="patients.php"><i class="fas fa-paw me-2"></i><span>My Patients</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="records.php"><i class="fas fa-file-medical me-2"></i><span>Medical Records</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="history.php"><i class="fas fa-history me-2"></i><span>Patient History</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="doctorsnotes.php"><i class="fas fa-sticky-note me-2"></i><span>Doctor Notes</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="clientdata.php"><i class="fas fa-users me-2"></i><span>Client Data</span></a></li>
+        </ul>
+        <div class="logout-btn">
+            <a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i><span>Logout</span></a>
         </div>
+    </div>
+</div>
 
-        <!-- Main Content -->
-        <div class="col-md-10 p-4 dashboard-anim">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3><i class="fas fa-user-md me-2"></i>Welcome, Dr. <?php echo $_SESSION['user_name']; ?></h3>
-            </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" id="navbar">
+    <div class="container-fluid">
+        <button class="btn btn-outline-light me-3" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h3 class="navbar-brand mb-0">Welcome, Dr. <?php echo $_SESSION['user_name']; ?></h3>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+    <div class="dashboard-anim">
 
             <!-- Dashboard Cards -->
             <div class="row mb-4">
@@ -80,14 +116,14 @@ $saturday = date('Y-m-d', strtotime('saturday this week'));
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Patient</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <th><i class="fas fa-calendar-day me-1"></i>Date</th>
+                                    <th><i class="fas fa-clock me-1"></i>Time</th>
+                                    <th><i class="fas fa-paw me-1"></i>Patient</th>
+                                    <th><i class="fas fa-info-circle me-1"></i>Status</th>
+                                    <th><i class="fas fa-cogs me-1"></i>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -139,8 +175,14 @@ $saturday = date('Y-m-d', strtotime('saturday this week'));
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+        document.getElementById('navbar').classList.toggle('collapsed');
+        document.getElementById('main-content').classList.toggle('collapsed');
+    });
+</script>
 </body>
 </html>

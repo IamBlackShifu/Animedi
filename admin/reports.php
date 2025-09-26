@@ -13,40 +13,71 @@ include("../includes/dbconn.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VetCare Pro - Reports</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/theme-infinityloc.css">
     <style>
-        body { background-color: #f8f9fa; }
-        .sidebar { background: #343a40; color: white; min-height: 100vh; }
-        .sidebar .nav-link { color: #adb5bd; }
-        .sidebar .nav-link:hover { color: white; }
-        .card { border: none; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        body { background-color: #ecf0f1; font-family: 'Montserrat', sans-serif; }
+        .sidebar { position: fixed; left: 0; top: 0; width: 250px; height: 100vh; background: #2c3e50; color: white; transition: width 0.3s; z-index: 1000; overflow-y: auto; }
+        .sidebar.collapsed { width: 70px; }
+        .sidebar .nav-link { color: #bdc3c7; transition: all 0.3s; padding: 10px 15px; }
+        .sidebar .nav-link:hover { color: white; background: #34495e; }
+        .sidebar .nav-link.active { color: white; background: #3498db; }
+        .sidebar .nav-link span { display: inline; }
+        .sidebar.collapsed .nav-link span { display: none; }
+        .sidebar .logout-btn { position: absolute; bottom: 20px; left: 15px; right: 15px; }
+        .sidebar.collapsed .logout-btn { left: 10px; right: 10px; }
+        .main-content { margin-left: 250px; transition: margin-left 0.3s; padding: 20px; }
+        .main-content.collapsed { margin-left: 70px; }
+        .navbar { background: #34495e; color: white; margin-left: 250px; transition: margin-left 0.3s; }
+        .navbar.collapsed { margin-left: 70px; }
+        .card { border: none; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); background: #ffffff; }
+        .table { border-radius: 10px; overflow: hidden; background: #ffffff; }
+        .table thead th { background: #34495e; color: white; border: none; }
+        .table tbody tr:hover { background: #f8f9fa; }
+        .btn { border-radius: 25px; }
+        .btn-primary { background: #3498db; border-color: #3498db; }
+        .btn-primary:hover { background: #2980b9; }
+        .btn-success { background: #27ae60; border-color: #27ae60; }
+        .btn-success:hover { background: #229954; }
+        .attribution { text-align: center; color: #7f8c8d; }
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-2 sidebar p-3">
-                <h4 class="text-center mb-4">VetCare Pro</h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="staff.php"><i class="fas fa-users me-2"></i>Manage Staff</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="reports.php"><i class="fas fa-chart-bar me-2"></i>Reports</a>
-                    </li>
-                    <li class="nav-item mt-4">
-                        <a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
-                    </li>
-                </ul>
-            </div>
+<!-- Fixed Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="p-3">
+        <h5 class="text-center mb-4">VetCare Pro</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard.php"><i class="fas fa-tachometer-alt me-2"></i><span>Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="staff.php"><i class="fas fa-users me-2"></i><span>Manage Staff</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="reports.php"><i class="fas fa-chart-bar me-2"></i><span>Reports</span></a>
+            </li>
+        </ul>
+        <div class="logout-btn">
+            <a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i><span>Logout</span></a>
+        </div>
+    </div>
+</div>
 
-            <!-- Main Content -->
-            <div class="col-md-10 p-4">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" id="navbar">
+    <div class="container-fluid">
+        <button class="btn btn-outline-light me-3" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h3 class="navbar-brand mb-0">Reports & Analytics - <?php echo $_SESSION['user_name']; ?></h3>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content" id="main-content">
                 <h2>Reports & Analytics</h2>
 
                 <div class="row mb-4">
@@ -177,9 +208,14 @@ include("../includes/dbconn.php");
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('navbar').classList.toggle('collapsed');
+            document.getElementById('main-content').classList.toggle('collapsed');
+        });
         // Appointments Chart
         const appointmentsCtx = document.getElementById('appointmentsChart').getContext('2d');
         new Chart(appointmentsCtx, {

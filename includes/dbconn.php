@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "myapp_user"; 
 $password = "testing123"; 
-$dbname = "vetcare_pro";
+$dbname = "myapp_db";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
